@@ -1,0 +1,77 @@
+<odoo>
+    <record id="pembeli_view_form" model="ir.ui.view">
+        <field name="name">pembeli.view.form</field>
+        <field name="model">showroom.pembeli</field>
+        <field name="arch" type="xml">
+            <form string="Pembeli Form">
+               <header>
+                    <button name="action_confirmed" string="Confirm" states="draft" type="object" class="btn-primary"/>
+                    <button name="action_settodraft" string="Set to Draft" type="object" class="btn-primary"/>
+                    <button name="action_done" string="Approve" states="confirmed" type="object" class="btn-primary"/>
+                    <button name="action_canceled" string="Cancel" states="confirmed, done" type="object"
+                            class="btn-primary" groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="id_pembeli"/>
+                            <field name="name"/>
+                            <field name="alamat"/>
+                        </group>
+                        <group>
+                            <field name="jenis_kelamin"/>
+                            <field name="umur"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pembeli_view_list" model="ir.ui.view">
+        <field name="name">pembeli.view.list</field>
+        <field name="model">showroom.pembeli</field>
+        <field name="arch" type="xml">
+            <tree string="Pembeli list">
+                <field name="name"/>
+                <field name="jenis_kelamin"/>
+                <field name="umur"/>
+                <field name="alamat"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="pembeli_view_search" model="ir.ui.view">
+        <field name="name">pembeli.view.search</field>
+        <field name="model">showroom.pembeli</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="umur"/>
+                <field name="jenis_kelamin"/>
+<!--                <filter string="Draft" name="draft_filter" domain="[('state', '=', 'draft')]"/>-->
+<!--                <filter string="Confirmed" name="confirmed_filter" domain="[('state', '=', 'confirmed')]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Score>10" name="score10_filter" domain="[('score', '>', 10)]"/>-->
+
+<!--                <group string="Group By..." expand="0" name="groupby">-->
+<!--                    <filter string="State" name="by_state" context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Date" name="by_date" context="{'group_by': 'date'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <record id="pembeli_action" model="ir.actions.act_window">
+        <field name="name">pembeli</field>
+        <field name="res_model">showroom.pembeli</field>
+        <field name="view_id" ref="pembeli_view_list"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="showroom_menu" name="Showroom" sequence="10"/>
+
+    <menuitem id="showroom_mmenu" parent="showroom.showroom_menu" name="Pembeli" action="pembeli_action" sequence="10"/>
+
+</odoo>

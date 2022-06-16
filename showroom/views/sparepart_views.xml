@@ -1,0 +1,73 @@
+<odoo>
+    <record id="sparepart_view_form" model="ir.ui.view">
+        <field name="name">sparepart.view.form</field>
+        <field name="model">showroom.sparepart</field>
+        <field name="arch" type="xml">
+            <form string="Sparepart Form">
+                <header>
+                    <button name="action_confirmed" string="Confirm" states="draft" type="object" class="btn-primary"/>
+                    <button name="action_settodraft" string="Set to Draft" type="object" class="btn-primary"/>
+                    <button name="action_done" string="Approve" states="confirmed" type="object" class="btn-primary"/>
+                    <button name="action_canceled" string="Cancel" states="confirmed, done" type="object"
+                            class="btn-primary" groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="id_sparepart"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="harga"/>
+                            <field name="stok"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sparepart_view_list" model="ir.ui.view">
+        <field name="name">sparepart.view.list</field>
+        <field name="model">showroom.sparepart</field>
+        <field name="arch" type="xml">
+            <tree string="Sparepart list">
+                <field name="name"/>
+                <field name="harga"/>
+                <field name="stok"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="sparepart_view_search" model="ir.ui.view">
+        <field name="name">sparepart.view.search</field>
+        <field name="model">showroom.sparepart</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="harga"/>
+                <field name="stok"/>
+<!--                <filter string="Draft" name="draft_filter" domain="[('state', '=', 'draft')]"/>-->
+<!--                <filter string="Confirmed" name="confirmed_filter" domain="[('state', '=', 'confirmed')]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Score>10" name="score10_filter" domain="[('score', '>', 10)]"/>-->
+
+<!--                <group string="Group By..." expand="0" name="groupby">-->
+<!--                    <filter string="State" name="by_state" context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Date" name="by_date" context="{'group_by': 'date'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <record id="sparepart_action" model="ir.actions.act_window">
+        <field name="name">sparepart</field>
+        <field name="res_model">showroom.sparepart</field>
+        <field name="view_id" ref="sparepart_view_list"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sparepart_menu" parent="showroom_menu" name="Sparepart" action="sparepart_action" sequence="40"/>
+
+</odoo>

@@ -1,0 +1,81 @@
+<odoo>
+    <record id="transaksi_view_form" model="ir.ui.view">
+        <field name="name">transaksi.view.form</field>
+        <field name="model">showroom.transaksi</field>
+        <field name="arch" type="xml">
+            <form string="Transaksi Form">
+                <header>
+                    <button name="action_confirmed" string="Confirm" states="draft" type="object" class="btn-primary"/>
+                    <button name="action_settodraft" string="Set to Draft" type="object" class="btn-primary"/>
+                    <button name="action_done" string="Approve" states="confirmed" type="object" class="btn-primary"/>
+                    <button name="action_canceled" string="Cancel" states="confirmed, done" type="object"
+                            class="btn-primary" groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="id_transaksi"/>
+                            <field name="totall"/>
+                            <field name="pembeli_id"/>
+                            <field name="pegawai_id"/>
+                        </group>
+                        <group>
+                            <field name="sparepart_id"/>
+                            <field name="date"/>
+                            <field name="jumlah"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detail Transaksi" name="detail_transaksi">
+                            <field name="detail_ids">
+                                <tree>
+                                    <field name="motor_id"/>
+                                    <field name="jumlah_barang"/>
+                                    <field name="harga_motor"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="transaksi_view_list" model="ir.ui.view">
+        <field name="name">transaksi.view.list</field>
+        <field name="model">showroom.transaksi</field>
+        <field name="arch" type="xml">
+            <tree string="Transaksi list">
+                <field name="date"/>
+                <field name="jumlah"/>
+                <field name="totall"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="transaksi_view_search" model="ir.ui.view">
+        <field name="model">showroom.transaksi</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="totall"/>
+                <filter string="Draft" name="draft_filter" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="confirmed_filter" domain="[('state', '=', 'confirmed')]"/>
+                <group string="Group By..." expand="0" name="groupby">
+                    <filter string="State" name="by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Date" name="by_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="transaksi_action" model="ir.actions.act_window">
+        <field name="name">transaksi</field>
+        <field name="res_model">showroom.transaksi</field>
+        <field name="view_id" ref="transaksi_view_list"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="transaksi_menu" parent="showroom_menu" name="Transaksi" action="transaksi_action" sequence="60"/>
+</odoo>

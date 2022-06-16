@@ -1,0 +1,89 @@
+<odoo>
+    <record id="motor_view_form" model="ir.ui.view">
+        <field name="name">motor.view.form</field>
+        <field name="model">showroom.motor</field>
+        <field name="arch" type="xml">
+            <form string="Motor form">
+                 <header>
+                    <button name="action_confirmed" string="Confirm" states="draft" type="object" class="btn-primary"/>
+                    <button name="action_settodraft" string="Set to Draft" type="object" class="btn-primary"/>
+                    <button name="action_done" string="Approve" states="confirmed" type="object" class="btn-primary"/>
+                    <button name="action_canceled" string="Cancel" states="confirmed, done" type="object"
+                            class="btn-primary" groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="id"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="harga"/>
+                            <field name="warna"/>
+                            <field name="stok"/>
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="Votes" name="votes">-->
+<!--                            <field name="voting_ids" readonly="1">-->
+<!--                                <tree decoration-info="vote == 'abstain'" decoration-warning = "vote =='yes'">-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="date"/>-->
+<!--                                    <field name="voter_id"/>-->
+<!--                                    <field name="vote"/>-->
+<!--                                    <field name="state"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="motor_view_list" model="ir.ui.view">
+        <field name="name">motor.view.list</field>
+        <field name="model">showroom.motor</field>
+        <field name="arch" type="xml">
+            <tree string="Motor list">
+                <field name="name"/>
+                <field name="warna"/>
+                <field name="stok"/>
+                <field name="harga"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="motor_view_search" model="ir.ui.view">
+        <field name="name">motor.view.search</field>
+        <field name="model">showroom.motor</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="warna"/>
+                <field name="harga"/>
+                <field name="stok"/>
+<!--                <filter string="Draft" name="draft_filter" domain="[('state', '=', 'draft')]"/>-->
+<!--                <filter string="Confirmed" name="confirmed_filter" domain="[('state', '=', 'confirmed')]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Score>10" name="score10_filter" domain="[('score', '>', 10)]"/>-->
+
+<!--                <group string="Group By..." expand="0" name="groupby">-->
+<!--                    <filter string="State" name="by_state" context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Date" name="by_date" context="{'group_by': 'date'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <record id="motor_action" model="ir.actions.act_window">
+        <field name="name">motor</field>
+        <field name="res_model">showroom.motor</field>
+        <field name="view_id" ref="motor_view_list"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="motor_menu" parent="showroom_menu" name="Motor" action="motor_action" sequence="30"/>
+
+</odoo>
